@@ -1,13 +1,16 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { NativeModules, View } from 'react-native';
+import { NativeModules, View, Dimensions } from 'react-native';
 
 import CardStack from './CardStack';
 import CardStackStyleInterpolator from './CardStackStyleInterpolator';
 import Transitioner from './Transitioner';
 import TransitionConfigs from './TransitionConfigs';
 import Header from './Header';
+
+/* Setting the width to avoid blank screen on android device? */
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const NativeAnimatedModule = NativeModules &&
   NativeModules.NativeAnimatedModule;
@@ -21,7 +24,7 @@ import type {
   NavigationTransitionProps,
   NavigationRouter,
   HeaderMode,
-  Style,
+  Stylee,
 } from '../TypeDefinition';
 
 import type { TransitionConfig } from './TransitionConfigs';
@@ -62,7 +65,7 @@ class CardStackTransitioner extends Component<DefaultProps, Props, void> {
         configureTransition={this._configureTransition}
         navigation={this.props.navigation}
         render={this._render}
-        style={this.props.style}
+        style={[this.props.style, { width: SCREEN_WIDTH }]}
         onTransitionStart={this.props.onTransitionStart}
         onTransitionEnd={this.props.onTransitionEnd}
       />
